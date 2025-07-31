@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Library Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Roboto&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f9f6f1;
+      --text: #1a1a1a;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --input-bg: #f0eae2;
+      --accent: #8B4513;
+      --glass-blur: blur(10px);
+    }
+
+    [data-theme='dark'] {
+      --bg: #1a1a1a;
+      --text: #f5f5f5;
+      --card-bg: rgba(42, 42, 42, 0.9);
+      --input-bg: #3b3b3b;
+      --accent: #d3a86c;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: var(--glass-blur);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      transition: background 0.4s ease;
+    }
+
+    .login-container {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      backdrop-filter: var(--glass-blur);
+      transition: background 0.3s ease;
+    }
+
+    .login-container h2 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    .quote {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 25px;
+      font-style: italic;
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input[type="email"],
+    input[type="password"],
+    input[type="text"],
+    select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid var(--accent);
+  background: var(--input-bg);
+  border-radius: 8px;
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: var(--text);
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+                    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 2px),
+                       calc(100% - 15px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--accent);
+      transition: 0.3s;
+    }
+
+    .toggle-password:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .actions a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .actions a:hover {
+      text-decoration: underline;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+    }
+
+    .remember-me input {
+      margin-right: 6px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+      background: #a0522d;
+    }
+
+    .mode-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: 2px solid var(--accent);
+      padding: 4px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .mode-toggle:hover {
+      background: var(--accent);
+      color: white;
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="login-container">
+    <button class="mode-toggle" onclick="toggleTheme()">🌗 Theme</button>
+    <h2>📚 Digital Library Login</h2>
+    <p class="quote">"A library is not a luxury but one of the necessities of life." – Henry Ward Beecher</p>
+
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <label for="role">Role</label>
+      <select id="role" required>
+        <option value="">Select Role</option>
+        <option value="student">Student</option>
+        <option value="faculty">Faculty</option>
+        <option value="librarian">Librarian</option>
+      </select>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required />
+
+      <label for="password">Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="password" placeholder="Default: library123" required />
+        <button class="toggle-password" type="button" onclick="togglePassword()">👁️</button>
+      </div>
+
+      <div class="actions">
+        <label class="remember-me">
+          <input type="checkbox" id="remember" /> Remember Me
+        </label>
+        <a href="#">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const theme = document.body.getAttribute("data-theme");
+      document.body.setAttribute("data-theme", theme === "dark" ? "light" : "dark");
+    }
+
+    function togglePassword() {
+      const passInput = document.getElementById("password");
+      passInput.type = passInput.type === "password" ? "text" : "password";
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const role = document.getElementById("role").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const remember = document.getElementById("remember").checked;
+
+      if (!role) {
+        alert("Please select a role.");
+        return;
+      }
+
+      if (password === "library123") {
+        alert(`✅ Login Successful as ${role}. Please update your password from your profile.`);
+        if (remember) {
+          localStorage.setItem("rememberEmail", email);
+        }
+      } else {
+        alert("❌ Invalid credentials. Try the default password 'library123'.");
+      }
+    }
+
+    window.onload = () => {
+      const savedEmail = localStorage.getItem("rememberEmail");
+      if (savedEmail) {
+        document.getElementById("email").value = savedEmail;
+        document.getElementById("remember").checked = true;
+      }
+    };
+  </script>
+</body>
+</html>
